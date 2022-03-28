@@ -4,10 +4,9 @@
 #include<algorithm>
 #include<vector>
 #include"HugeInt.h"
-using namespace std;
-
 
 HugeInt::HugeInt() : length(0), digits(""), sign(0) {}
+
 
 HugeInt::HugeInt(int value) {
 	length = 0;
@@ -26,7 +25,7 @@ HugeInt::HugeInt(int value) {
 	}
 }
 
-HugeInt::HugeInt(string value) {
+HugeInt::HugeInt(std::string value) {
 	//check if value is can be assigned as string
 	//the first charcter should be either '-' or number from 1 to 9
 	int len = value.length();
@@ -38,13 +37,13 @@ HugeInt::HugeInt(string value) {
 
 		//first digits if value should not be '0'
 		if (((value[0] - '0' > 10) || (value[0] - '0') < 1) && value.length()!=1) {
-			throw invalid_argument("Invalid Integer Type: Leading Zero");
+			throw std::invalid_argument("Invalid Integer Type: Leading Zero");
 		}
 
 		//following digits  should be between 0 to 9
 		for(int i=1; i<len; i++){
 			if((value[i]-'0'>10) || (value[i]-'0')<0){
-				throw invalid_argument("Invalid Integer Type:Contains non-valid character");
+				throw std::invalid_argument("Invalid Integer Type:Contains non-valid character");
 			}
 		}
 
@@ -56,16 +55,16 @@ HugeInt::HugeInt(string value) {
 	else {
 		//check that string is not "-"
 		if (len == 1) {
-			throw invalid_argument("Invalid Integer Type: Not an Integer");
+			throw std::invalid_argument("Invalid Integer Type: Not an Integer");
 		}
 		//first digit should not be '0'
 		if ((value[1] - '0' > 10) || (value[1] - '0') < 1) {
-			throw invalid_argument("Invalid Integer Type: Leading Zero");
+			throw std::invalid_argument("Invalid Integer Type: Leading Zero");
 		}
 		//check that following digits are between 0 to 9
 		for(int i=2; i<len; i++){
 			if((value[i]-'0')>10 || (value[i]-'0')<0){
-				throw invalid_argument("Invalid Integer Type:Contains non-valid character");
+				throw std::invalid_argument("Invalid Integer Type:Contains non-valid character");
 			}
 		}
 		length = value.length() - 1;
@@ -76,7 +75,7 @@ HugeInt::HugeInt(string value) {
 
 }
 
-HugeInt::HugeInt(int s, string d){
+HugeInt::HugeInt(int s, std::string d){
 	sign=s;
 	digits=d;
 	length=d.length();
@@ -102,15 +101,15 @@ int HugeInt::cmp(const HugeInt& b)const {
 }
 
 
-string HugeInt::addNum(const HugeInt& b)const {
-	string temp;
-	string s1=this->digits;
-	string s2=b.digits;
+std::string HugeInt::addNum(const HugeInt& b)const {
+	std::string temp;
+	std::string s1=this->digits;
+	std::string s2=b.digits;
 	int len1=(int)s1.size();
 	int len2=(int)s2.size();
 	if (len1<len2){
-		swap(s1,s2);
-		swap(len1,len2);
+		std::swap(s1,s2);
+		std::swap(len1,len2);
 	}
 	int carry = 0;
 	for (int i = 0; i < len2; i++) {
@@ -131,23 +130,22 @@ string HugeInt::addNum(const HugeInt& b)const {
 	return temp;
 }
 
-string HugeInt::subNum(const HugeInt& b)const {
-
+std::string HugeInt::subNum(const HugeInt& b)const {
 	int c = this->cmp(b);
 	if(c==0){
-		string temp="0";
+		std::string temp="0";
 		return temp;
 	}
-	string s1=this->digits;
-	string s2=b.digits;
+	std::string s1=this->digits;
+	std::string s2=b.digits;
 	int len1=(int)s1.size();
 	int len2=(int)s2.size();
 	if(c==-1){
-		swap(s1,s2);
-		swap(len1, len2);
+		std::swap(s1,s2);
+		std::swap(len1, len2);
 	}
 	
-	string temp;
+	std::string temp;
 	int carry = 0;
 
 	for (int i = 0; i < len2; i++) {
@@ -187,16 +185,15 @@ string HugeInt::subNum(const HugeInt& b)const {
 
 
 HugeInt HugeInt:: operator + (const HugeInt& arg) const {
-
-	if (this->sign == arg.sign) {
+	if (this->sign == arg.sign){
 		
-		string t=this->addNum(arg);
+		std::string t=this->addNum(arg);
 		HugeInt temp(this->sign,t);
 		return temp;
 	}
 
 	else {
-		string t=this->subNum(arg);
+		std::string t=this->subNum(arg);
 		if(this->cmp(arg)==-1){
 			HugeInt temp(arg.sign, t);
 			return temp;
@@ -220,7 +217,7 @@ HugeInt HugeInt:: operator * (const HugeInt& arg) const {
 	}
 	int n = this->length;
 	int m = arg.length;
-	vector<int> temp(n * m + 3, 0);
+	std::vector<int> temp(n * m + 3, 0);
 	int carry = 0;
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < m; j++) {
@@ -252,7 +249,7 @@ HugeInt HugeInt:: operator * (const HugeInt& arg) const {
 	}
 
 	//trim additional 0's
-	vector<int>::iterator it;
+	std::vector<int>::iterator it;
 	it = temp.begin();
 
 	if (last == -1) {
@@ -267,7 +264,7 @@ HugeInt HugeInt:: operator * (const HugeInt& arg) const {
 		}
 	}
 	
-	string str;
+	std::string str;
 	for(int i=0; i<(int)temp.size(); i++){
 		str.push_back(char(temp[i]+'0'));
 	}
@@ -276,9 +273,19 @@ HugeInt HugeInt:: operator * (const HugeInt& arg) const {
 	return tmp;
 }
 
-ostream& operator<<(ostream& out, const HugeInt& a) {
-	if (a.sign == 1) cout << '-';
+std::ostream& operator<<(std::ostream& out, const HugeInt& a) {
+	if (a.sign == 1) std::cout << '-';
 	for (int i = a.digits.size() - 1; i >= 0; i--)
-		cout << a.digits[i];
-	return cout;
+		std::cout << a.digits[i];
+	return std::cout;
+}
+
+int main(){
+	HugeInt e("0");
+	HugeInt a("99999999999999");
+	HugeInt b("-1235");
+	HugeInt c=a*b;
+	std::cout<<c<<std::endl;
+	HugeInt d=a+b;
+	std::cout<<d<<std::endl;
 }
