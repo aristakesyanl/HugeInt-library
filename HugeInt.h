@@ -1,6 +1,5 @@
 #include<string>
 #include<vector>
-using namespace std;
 
 /*****************************************
 **Class HugeInt define integer values up to
@@ -17,19 +16,20 @@ using namespace std;
 class HugeInt{
 public:
 	HugeInt(int);
-	HugeInt(string);
+	HugeInt(std::string);
 	HugeInt();
 	HugeInt operator + (const HugeInt&) const;
 	HugeInt operator * (const HugeInt&) const;
 	int cmp(const HugeInt& b)const;
-	friend ostream &operator<<(ostream &,const HugeInt &);
-	string digits;
+	friend std::ostream &operator<<(std::ostream &,const HugeInt &);
+	std::string digits;
 	int length;
+	int getSign();
 	int sign;
 private:
-	string addNum(const HugeInt& b)const;
-	string subNum(const HugeInt& b)const;
-	HugeInt(int, string);
+	std::string addNum(const HugeInt& b)const;
+	std::string subNum(const HugeInt& b)const;
+	HugeInt(int, std::string);
 };
 
 #endif
