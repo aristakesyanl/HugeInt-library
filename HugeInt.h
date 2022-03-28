@@ -1,4 +1,3 @@
-#pragma once
 #include<string>
 #include<vector>
 using namespace std;
@@ -24,13 +23,13 @@ public:
 	HugeInt operator * (const HugeInt&) const;
 	int cmp(const HugeInt& b)const;
 	friend ostream &operator<<(ostream &,const HugeInt &);
-	vector<int> digits;
+	string digits;
 	int length;
 	int sign;
 private:
-	HugeInt addNum(const HugeInt& b)const;
-	HugeInt subNum(const HugeInt& b)const;
-	
+	string addNum(const HugeInt& b)const;
+	string subNum(const HugeInt& b)const;
+	HugeInt(int, string);
 };
 
 #endif
