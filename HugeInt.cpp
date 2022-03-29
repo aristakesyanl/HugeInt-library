@@ -279,13 +279,3 @@ std::ostream& operator<<(std::ostream& out, const HugeInt& a) {
 		std::cout << a.digits[i];
 	return std::cout;
 }
-
-int main(){
-	HugeInt e("0");
-	HugeInt a("99999999999999");
-	HugeInt b("-1235");
-	HugeInt c=a*b;
-	std::cout<<c<<std::endl;
-	HugeInt d=a+b;
-	std::cout<<d<<std::endl;
-}
